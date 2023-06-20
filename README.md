@@ -20,6 +20,9 @@ Escolhi essa distro por querer uma distro diferente da minha principal o [Manjar
 - [Docker](#docker)
   - [Iniciando o docker](#iniciando-o-docker)
     - [ALIAS](#alias)
+- [Tmux](#tmux)
+  - [Instalando o Tmux](#instalando-o-tmux)
+  - [Personalizando o Tmux](#personalizando-o-tmux)
   
 
 # Instalando o Alpine Linux no WSL2
@@ -240,3 +243,103 @@ docker-init
 docker run --rm hello-world
 ```
 Se sua saída obtiver o **Hello from dorcker!** sua configuração está completa. Parabéns!!
+
+# Tmux
+
+O tmux é um [multiplexador de terminal](https://opensource.com/article/21/5/linux-terminal-multiplexer) que permite que por meio de uma única entrada ( você com seu terminal aberto) enviar comandos para qualquer uma de suas saídas( um grupo de servidores ou  partes diferentes de um mesmo sistema).
+
+Para deixar mais claro, imagine um sistema que só pode ser acessado via terminal. Nesse sistema é necessário fazer a edição de um arquivo de configuração, mas é preciso também monitorar os logs que estão sendo gerados naquele mesmo instante.
+
+Para esta situação precisaríamos que nosso terminal fosse capaz de enviar comandos para duas saídas distintas, nesse momento que o  **multiplexador de terminal** entra pois ele permite criar varias conexões/janelas de acesso em um mesmo terminal tornando essa tarefa possível.
+
+## Instalando o Tmux
+
+Simplesmente usamos o comando 
+
+```sh
+sudo apk add tmux
+```
+e pronto o tmux está pronto para uso e deixo neste link a [lista de comandos](https://tmuxcheatsheet.com/) dessa ferramenta incrível.
+
+## Personalizando o Tmux
+
+Como você ja deve ter percebido a ferramenta é feia que dói, além de ter alguns comandos bem difíceis de serem executados, a boa noticia é que podemos personalizar a interface como os comandos da ferramenta, neste link deixo uma [lista personalizações](https://www.trackawesomelist.com/rothgar/awesome-tmux/readme/#themes) possíveis para torna-la mais agradável.
+
+Inicialmente vamos instalar o [TMP](https://github.com/tmux-plugins/tpm) que é um gerenciador de plugins do Tmux para isso executamos o comando
+
+```sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+em seguida crie o arquivo de configuração do tmux o `tmux.conf` usando comando
+
+```sh
+sudo nano ~/.tmux.conf
+```
+escreva a seguinte configuração
+
+```
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+```
+salve o arquivo e em seguida execute o comando 
+
+```sh
+source ~/.tmux.conf
+```
+agora inicie o tmux usando 
+
+```sh
+tmux new
+```
+Se tudo estiver saindo como o esperado nada deve ter acontecido, isso acontece pelo fato de que o arquivo está pronto, mas não iniciamos a instalação ou atualização do plugin.
+
+Para isso executamos o prefixo ou leader do tmux que por padrão é o `Ctrl B` + **I**( isso mesmo tem que ser `i` maiúsculo ) ou   `Ctrl B` + **U** para atualização dos plugins.
+
+Sei que é bem chato, mas isso só será feito apenas para podermos adicionar novos plugins ao tmux. Minha sugestão é que olhe a lista de plugins disponíveis assim como os mapeamentos de teclas possíveis e deixe com sua cara, mas caso queria seguir minha configuração deixo aqui registrado como ela se encontra no momento.
+
+```sh
+# Set colors terminal overrides
+set-option -sa terminal-overrides ",xterm*:Tc"
+
+# Enable mouse mode
+set -g mouse on
+
+# Start counting pane and window number at 1
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Use xclip to copy and paste with the system clipboard
+bind C-c run "tmux save-buffer - | xclip -i -sel clip"
+bind C-v run "tmux set-buffer $(xclip -o -sel clip); tmux paste-buffer"
+
+# count again windows when a window is close
+set -g renumber-windows on
+
+# increase history limit
+set-option -g history-limit 10000
+
+# For create split on horizontal or vertical
+bind | split-window -hc "#{pane_current_path}"
+bind - split-window -vc "#{pane_current_path}"
+
+# change posision between windows
+bind -r "<" swap-window -d -t -1
+bind -r ">" swap-window -d -t +1
+
+# create windom the same directory
+bind c new-window -c "#{pane_current_path}"
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin "janoamaral/tokyo-night-tmux"
+
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run  '~/.tmux/plugins/tpm/tpm'
+```
