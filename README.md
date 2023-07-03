@@ -24,6 +24,7 @@ Escolhi essa distro por querer uma distro diferente da minha principal o [Manjar
   - [Instalando o Tmux](#instalando-o-tmux)
   - [Personalizando o Tmux](#personalizando-o-tmux)
 - [SSH](#ssh)
+- [Neovim](#neovim)
   
 
 # Instalando o Alpine Linux no WSL2
@@ -370,3 +371,21 @@ agora é só gerar nossas chaves publicas e privadas pelo comando
 ```sh
 ssh-keygen -t rsa -b 4096
 ```
+# Neovim
+
+Finalmente vamos a parte mais esperada, iniciamos instalando o [neovim](https://github.com/neovim/neovim/wiki/Installing-Neovim#install-from-package) pelo comando:
+
+```sh
+sudo apk add neovim
+```
+Na versão que estou usando do alpine o neovim suportado é o  `0.7` , mas se no sistema que estiver usando a versão `0.9` ou superior estiver disponível recomendo demais os seguintes links.
+  
+  - [Lunarvim](https://github.com/LunarVim): Uma IDE baseada em Neovim 
+  - [NvChad](https://nvchad.com): Um elegante plugin para Neovim  
+
+Nesse [video](https://www.youtube.com/watch?v=Mtgo-nP_r8Y&list=LL&index=8) do canal [
+Dreams of Code](https://www.youtube.com/@dreamsofcode) ele monstra o passo a passo pra configurar o NvChad deixando seu neovim pronto para o desenvolvimento, importante também dizer que no site oficial do NvChad temos um tópico dedicado a [ensinar o básico da linguagem Lua](https://nvchad.com/docs/quickstart/learn-lua)
+
+Para esse tutorial estou usando como base o video [Como Configurar o VIM e o NEOVIM do ZERO em 2023. Produtividade Absurda](https://www.youtube.com/watch?v=lm7y2hI6zME&list=LL) e [site](https://www.manualdocodigo.com.br/vim-basico/) do canal [
+Manual do Código](https://www.youtube.com/@ManualdoCodigo).
+
