@@ -23,6 +23,7 @@ Escolhi essa distro por querer uma distro diferente da minha principal o [Manjar
 - [Tmux](#tmux)
   - [Instalando o Tmux](#instalando-o-tmux)
   - [Personalizando o Tmux](#personalizando-o-tmux)
+- [SSH](#ssh)
   
 
 # Instalando o Alpine Linux no WSL2
@@ -342,4 +343,30 @@ set -g @plugin "janoamaral/tokyo-night-tmux"
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run  '~/.tmux/plugins/tpm/tpm'
+```
+
+# SSH
+
+Fui bem negligente e acabei deixando pra fazer a configuração do cliente ssh somente agora, mas agora vai. Iniciamos instalando o cliente pelo comando.
+
+```sh
+sudo apk add openssh
+```
+
+Agora vamos configurar para ele iniciar junto com o sistema
+
+```sh
+sudo rc-update add sshd
+```
+
+sua resposta será algo como 
+
+```sh
+service sshd added to runlevel sysinit
+```
+
+agora é só gerar nossas chaves publicas e privadas pelo comando
+
+```sh
+ssh-keygen -t rsa -b 4096
 ```
