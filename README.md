@@ -20,6 +20,8 @@ Escolhi essa distro por querer uma distro diferente da minha principal o [Manjar
 - [Docker](#docker)
   - [Iniciando o docker](#iniciando-o-docker)
     - [ALIAS](#alias)
+- [Extras](#extras)
+  - [Timezone](#timezone) 
 - [Tmux](#tmux)
   - [Instalando o Tmux](#instalando-o-tmux)
   - [Personalizando o Tmux](#personalizando-o-tmux)
@@ -245,6 +247,14 @@ docker-init
 docker run --rm hello-world
 ```
 Se sua saída obtiver o **Hello from dorcker!** sua configuração está completa. Parabéns!!
+# Extras
+## Timezone
+Não sei na sua instalação, mas na minha o fuso horário estava diferente, pra corrigir isso vamos usar o o pacote `tzdata` e basta executar os comandos a seguir.
+
+```sh
+sudo apk add tzdata
+sudo ln -s /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+```
 
 # Tmux
 
